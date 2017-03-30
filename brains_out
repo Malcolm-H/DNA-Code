@@ -1,0 +1,2 @@
+gfortran -Wall -O3 dna_rand_mod.f90 dna_ham_eqs_mod.f90 dna_var_eqs_mod.f90 dna_energy_eqns_mod.f90 dna_integrators.f90 dna_initialiser.f90 -o dna.out
+./dna.out
