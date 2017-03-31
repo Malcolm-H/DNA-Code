@@ -21,7 +21,7 @@ CONTAINS
       real(rk) :: h, tf, E0, ma, kb, En, time1, time2, chi, alpha1=0._rk
       character(len=50) :: x1, fmt
       call cpu_time(time1)
-      fmt = '(I3)'
+      fmt = '(I4)'
       write(x1,fmt) int(tf)
       ma = 0.031_rk
       kb = 0.00008617_rk

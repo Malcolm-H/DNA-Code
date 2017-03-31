@@ -1,0 +1,2 @@
+[[ $1 = "bish" ]] && v1="*.csv" || v1=""
+rm *.out *.ini *.mod $v1

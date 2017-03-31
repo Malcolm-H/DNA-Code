@@ -26,9 +26,9 @@ program dnao4
   ! ma = 300._rk
   kb = 0.00008617_rk
   h = 0.015_rk
-  tf = 100.0_rk
+  tf = 1000.0_rk
   ! niter = tf/h
-  E0 = 2.0_rk
+  E0 = 4.0_rk
   ! D and a coefficients
   atgc = 1._rk
   atgc(ndof-4:ndof) = 0._rk
@@ -61,6 +61,7 @@ program dnao4
 
     ! for random ICs
     call random_number(pr)
+    ! Box-Muller method
     p0 = sqrt (-2._rk * log(pr(1:ndof))) * cos(2._rk * pi * pr(ndof+1:ndof2))
     ! for SS excitations
     ! p0 = 0._rk
