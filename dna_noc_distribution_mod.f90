@@ -57,7 +57,7 @@ CONTAINS
       call random_number(rand_ind_r)
       rand_ind_i = int(ndof * rand_ind_r) + 1_ik
       ! if (atgc(rand_ind_i) .ne. 1)
-      atgc(rand_ind_i) = 1._ik
+      atgc(rand_ind_i) = 1_ik
     end do
   end function get_atgc
 end module
