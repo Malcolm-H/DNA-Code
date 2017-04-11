@@ -2,7 +2,7 @@ module integrators
   implicit none
   ! public :aba864
 CONTAINS
-  subroutine aba864(x,w,D,a,E0,h,tf)
+  subroutine aba864(x,w,D,a,E0,h,tf,noc)
       use ham_eqs_mod, only: ham_eqs_x, ham_eqs_p
       use energy_eqns, only: energy, temp
       use var_eqs_mod, only: var_eqs_x, var_eqs_p
@@ -12,17 +12,19 @@ CONTAINS
       integer, parameter :: ik = 8, nini=21_ik, nfin=20_ik,nfoutx=19_ik,nfoute=18_ik
       integer, parameter :: nfoutt=17_ik, nfoutl=100_ik
       integer(ik), parameter :: ndof=100, ndof2=ndof*2
-      integer(ik) :: kk, ll
+      integer(ik) :: kk, ll, noc
       real(rk), dimension(ndof2) :: x, w !x=(q1,q2,...,qN,p1,p2,...,pN)
       real(rk), dimension(ndof) :: dxdt, dpdt !at=0, gc=1
       real(rk), dimension(ndof) :: D, a
       real(rk), dimension(ndof) :: ddxdt, ddpdt
       real(rk), dimension(9) :: cc,dc
       real(rk) :: h, tf, E0, ma, kb, En, time1, time2, chi, alpha1=0._rk
-      character(len=50) :: x1, fmt
+      character(len=50) :: x1, x2, fmt, fmt2
       call cpu_time(time1)
       fmt = '(I4)'
+      fmt2 = '(I2)'
       write(x1,fmt) int(tf)
+      write(x2,fmt2) int(noc)
       ma = 0.031_rk
       kb = 0.00008617_rk
 
@@ -45,10 +47,10 @@ CONTAINS
       dc(7) = dc(1)
       dc(8) = 0._rk
       print*, ' '
-      ! open(unit=nfoutx, file='Dna_Order4_xout.csv')
-      open(unit=nfoute, file='Dna_ABA864_Eout_t'//trim(x1)//'.csv')
-      open(unit=nfoutt, file='Dna_ABA864_Tout_t'//trim(x1)//'.csv')
-      open(unit=nfoutl, file='Dna_ABA864_Lout_t'//trim(x1)//'.csv')
+      open(unit=nfoutx, file='/home/malcolm/Documents/Honours/DNA-Data/Dna_ABA864_Xmout_t'//trim(x1)//'_noc_'//trim(x2)//'.csv')
+      open(unit=nfoute, file='/home/malcolm/Documents/Honours/DNA-Data/Dna_ABA864_Eout_t'//trim(x1)//'_noc_'//trim(x2)//'.csv')
+      open(unit=nfoutt, file='/home/malcolm/Documents/Honours/DNA-Data/Dna_ABA864_Tout_t'//trim(x1)//'_noc_'//trim(x2)//'.csv')
+      open(unit=nfoutl, file='/home/malcolm/Documents/Honours/DNA-Data/Dna_ABA864_Lout_t'//trim(x1)//'_noc_'//trim(x2)//'.csv')
 
       ! open(unit=nfoutt, file='Dna_Order4_Tout'//trim(x1)//'.csv')
       ! open(unit=nfoutx, file='Dna_Order4_xout.csv')
@@ -56,7 +58,7 @@ CONTAINS
       write(nfoute,*) 0._rk
       write(nfoutt,*) temp(x)
       write(nfoutl,*) 0._rk
-      ! write(nfoutx,*) x(1:ndof)
+      write(nfoutx,*) maxval(x(1:ndof))
       kk = 0_ik
       do while (kk .lt. tf/h)
         do ll=1,size(cc)
@@ -81,14 +83,14 @@ CONTAINS
           write(nfoute,*) abs((En-E0)/E0)!, ', ', maxval(x(1:ndof))
           write(nfoutt,*) temp(x)
           write(nfoutl,*) chi
-          ! write(nfoutx,*) x(1:ndof)
+          write(nfoutx,*) maxval(x(1:ndof))
         end if
         kk = kk + 1_ik
       end do
       close(nfoute)
       close(nfoutt)
       close(nfoutl)
-      ! close(nfoutx)
+      close(nfoutx)
       call cpu_time(time2)
       print*, (time2-time1)
     end subroutine
