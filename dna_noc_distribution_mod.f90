@@ -6,7 +6,7 @@ CONTAINS
   function noc_distribution(noc, pat, ntot) result(atgc)
     use rand_mod, only: init_random_seed
     implicit none
-    integer, parameter :: ik=8, rk=8
+    integer, parameter :: ik=4, rk=8
     integer(ik), intent(in) :: noc, ntot
     real(rk), intent(in) :: pat
     integer(ik), dimension(ntot) :: atgc

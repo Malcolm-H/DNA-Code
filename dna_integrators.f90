@@ -9,7 +9,7 @@ CONTAINS
       use rand_mod, only: init_random_seed
       implicit none
       integer, parameter :: rk = 8
-      integer, parameter :: ik = 8, nini=21_ik, nfin=20_ik,nfoutx=19_ik,nfoute=18_ik
+      integer, parameter :: ik = 4, nini=21_ik, nfin=20_ik,nfoutx=19_ik,nfoute=18_ik
       integer, parameter :: nfoutt=17_ik, nfoutl=100_ik
       integer(ik), parameter :: ndof=100, ndof2=ndof*2
       integer(ik) :: kk, ll, noc
@@ -19,12 +19,14 @@ CONTAINS
       real(rk), dimension(ndof) :: ddxdt, ddpdt
       real(rk), dimension(9) :: cc,dc
       real(rk) :: h, tf, E0, ma, kb, En, time1, time2, chi, alpha1=0._rk
-      character(len=50) :: x1, x2, fmt, fmt2
+      character(len=50) :: x1, x2, x3, fmt, fmt2, fmt3
       call cpu_time(time1)
       fmt = '(I4)'
       fmt2 = '(I2)'
+      fmt3 = '(I1)'
       write(x1,fmt) int(tf)
       write(x2,fmt2) int(noc)
+      write(x3,fmt3) int(E0)
       ma = 0.031_rk
       kb = 0.00008617_rk
 
@@ -47,10 +49,10 @@ CONTAINS
       dc(7) = dc(1)
       dc(8) = 0._rk
       print*, ' '
-      open(unit=nfoutx, file='/home/malcolm/Documents/Honours/DNA-Data/Dna_ABA864_Xmout_t'//trim(x1)//'_noc_'//trim(x2)//'.csv')
-      open(unit=nfoute, file='/home/malcolm/Documents/Honours/DNA-Data/Dna_ABA864_Eout_t'//trim(x1)//'_noc_'//trim(x2)//'.csv')
-      open(unit=nfoutt, file='/home/malcolm/Documents/Honours/DNA-Data/Dna_ABA864_Tout_t'//trim(x1)//'_noc_'//trim(x2)//'.csv')
-      open(unit=nfoutl, file='/home/malcolm/Documents/Honours/DNA-Data/Dna_ABA864_Lout_t'//trim(x1)//'_noc_'//trim(x2)//'.csv')
+      open(unit=nfoutx, file='/home/malcolm/Documents/Honours/DNA-Data/E4/Dna_ABA864_Xmout_t'//trim(x1)//'_noc_'//trim(x2)//'.csv')
+      open(unit=nfoute, file='/home/malcolm/Documents/Honours/DNA-Data/E4/Dna_ABA864_Eout_t'//trim(x1)//'_noc_'//trim(x2)//'.csv')
+      open(unit=nfoutt, file='/home/malcolm/Documents/Honours/DNA-Data/E4/Dna_ABA864_Tout_t'//trim(x1)//'_noc_'//trim(x2)//'.csv')
+      open(unit=nfoutl, file='/home/malcolm/Documents/Honours/DNA-Data/E4/Dna_ABA864_Lout_t'//trim(x1)//'_noc_'//trim(x2)//'.csv')
 
       ! open(unit=nfoutt, file='Dna_Order4_Tout'//trim(x1)//'.csv')
       ! open(unit=nfoutx, file='Dna_Order4_xout.csv')
